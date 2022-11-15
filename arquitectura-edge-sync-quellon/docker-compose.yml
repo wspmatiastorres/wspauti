@@ -1,0 +1,50 @@
+version: '3.1'
+services:
+  # Ignition Gateway
+  ig-quellon-full:
+    image: kcollins/ignition:8.0.2 # Se usa la imagen convencional FULL
+    container_name: ig-quellon-full
+    restart: unless-stopped
+    ports:
+      - 9088:8088
+
+    volumes:
+      - gw_quellon_data1:/var/lib/ignition/data # Mapeo a un "volumen" no en la misma carpeta
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+    environment:
+        GATEWAY_ADMIN_USERNAME: admin
+        GATEWAY_ADMIN_PASSWORD: password
+        GATEWAY_SYSTEM_NAME: ignition-gw-full
+        IGNITION_EDITION: FULL
+
+  ig-quellon-edge:
+    image: kcollins/ignition:8.0.2-edge # Se usa una imagen especial para EDGE
+    container_name: ig-quellon-edge
+    restart: unless-stopped
+    ports:
+      - 9089:8088
+
+    volumes:
+      - gw_quellon_data2:/var/lib/ignition/data # Mapeo a un "volumen" no en la misma carpeta
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+    environment:
+        GATEWAY_ADMIN_USERNAME: admin
+        GATEWAY_ADMIN_PASSWORD: password
+        GATEWAY_SYSTEM_NAME: ignition-gw-edge
+        IGNITION_EDITION: EDGE
+
+volumes:
+  gw_quellon_data1:
+  gw_quellon_data2:
