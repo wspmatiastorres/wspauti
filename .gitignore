@@ -1,5 +1,6 @@
 # Files
 .env
+ssh.sh
 
 # Folders
 __pycache__/
